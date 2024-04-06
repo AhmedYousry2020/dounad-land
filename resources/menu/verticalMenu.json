@@ -1,0 +1,28 @@
+{
+  "menu": [
+    {
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "dashboard",
+      "url": "/"
+    },
+    {
+      "name": "Users",
+      "icon": "menu-icon tf-icons ti ti-layout-sidebar",
+      "slug": "users",
+      "url": "/users"
+    },
+    {
+      "name": "Categories",
+      "icon": "menu-icon tf-icons ti ti-layout-sidebar",
+      "slug": "categories",
+      "url": "/categories"
+    },
+    {
+      "name": "Items",
+      "icon": "menu-icon tf-icons ti ti-layout-sidebar",
+      "slug": "items",
+      "url": "/items"
+    }
+  ]
+}
