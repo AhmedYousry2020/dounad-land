@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Interfaces\CategoryInterface;
 use Illuminate\Http\Request;
 
@@ -27,15 +28,23 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+      return view('admin.categories.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+      return $this->categoryRepository->store($request->only([
+        'category_name_' . FL,
+        'category_name_' . SL,
+        'category_description_' . FL,
+        'category_description_' . SL,
+        'is_active'
+    ]))
+     ? redirect()->route('admin.categories.index')->with('alert-success', __('general.Add Successfully'))
+    : redirect()->back()->with('alert-danger', __('general.Add Failed'))->withInput();
     }
 
     /**

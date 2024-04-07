@@ -29,18 +29,19 @@ $breadcrumbs = [[['link' => route('admin.categories.index'), 'name' => __('categ
     <x-slot name="tbody">
 
         @foreach ($categories as $category)
-        <td>{{ $category->id }}</td>
-        <td>{{ $category->id }}</td>
-        <td>{{ $category->id }}</td>
-        <td>{{ $category->id }}</td>
-        <td>
-          <x-inputs.btn.view :route="route('admin.categories.show',$caetgory->id)" />
+        <tr>
+          <td>{{ $category->id }}</td>
+          <td>{{ $category->{'category_name_'.FL} }}</td>
+          <td>{{ $category->{'category_name_'.SL} }}</td>
+          <td>{!! isActive((bool) $category->is_active) !!}</td>
+          <td>
+            <x-inputs.btn.view :route="route('admin.categories.show',$category->id)" />
 
-          <x-inputs.btn.edit :route="route('admin.categories.edit',$caetgory->id)" />
+            <x-inputs.btn.edit :route="route('admin.categories.edit',$category->id)" />
 
-          <x-inputs.btn.delete :route="route('admin.categories.destroy',$caetgory->id)" />
-      </td>
-
+            <x-inputs.btn.delete :route="route('admin.categories.destroy',$category->id)" />
+          </td>
+        </tr>
         @endforeach
         </tbody>
     </x-slot>
