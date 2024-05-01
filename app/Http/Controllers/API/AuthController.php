@@ -48,7 +48,7 @@ class AuthController extends Controller
     {
         try {
             $data = $request->validated();
-            $user = User::where('email', $data['email'])->first();
+            $user = User::where('phone', $data['phone'])->first();
             if (!$user)
                 return api(false, 400, __('constants.loginErr'))->get();
 

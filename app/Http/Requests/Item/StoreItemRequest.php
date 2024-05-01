@@ -32,6 +32,8 @@ class StoreItemRequest extends FormRequest
         'description_' . SL => 'required|string',
         'item_slug' => 'required|string',
         'item_image' => 'required|file',
+        'price'=>'required',
+        'qty_available'=>'required',
         'category_id' => 'required|integer',
         'is_active' => 'boolean',
      ];

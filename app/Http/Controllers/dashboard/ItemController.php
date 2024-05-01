@@ -44,8 +44,7 @@ class ItemController extends Controller
       if (array_key_exists('item_image', $data)) {
         $data['item_image'] = storeImage($data['item_image'], '/uploads/itemImages');
      }
-        return $this->itemRepository->store($data
-        )
+        return $this->itemRepository->store($data)
         ? redirect()->route('admin.items.index')->with('alert-success', __('general.Add Successfully'))
         : redirect()->back()->with('alert-danger', __('general.Add Failed'))->withInput();
     }

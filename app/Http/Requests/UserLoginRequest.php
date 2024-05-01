@@ -24,10 +24,12 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => [
-                'required',
-                'email',
-            ],
+          'phone' => [
+            'required',
+            'numeric',
+            'min:10',
+
+        ],
             'password' => [
                 'required',
             ]

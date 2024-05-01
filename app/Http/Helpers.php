@@ -66,3 +66,10 @@ if (!function_exists('storeImage')) {
       }
   }
 }
+
+if(!function_exists('format_price')){
+  function format_price()
+  {
+    return '0.00';
+  }
+}

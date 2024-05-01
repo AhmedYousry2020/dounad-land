@@ -15,7 +15,11 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(\App\Interfaces\BaseInterface::class, \App\Repositories\BaseRepository::class);
         $this->app->bind(\App\Interfaces\CategoryInterface::class, \App\Repositories\CategoryRepository::class);
+
         $this->app->bind(\App\Interfaces\ItemInterface::class, \App\Repositories\ItemRepository::class);
+        $this->app->bind(\App\Interfaces\CartInterface::class, \App\Repositories\CartRepository::class);
+        $this->app->bind(\App\Interfaces\CartItemInterface::class, \App\Repositories\CartItemRepository::class);
+        $this->app->bind(\App\Interfaces\BoxInterface::class, \App\Repositories\BoxRepository::class);
 
       }
 

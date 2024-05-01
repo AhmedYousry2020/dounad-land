@@ -19,6 +19,8 @@ $breadcrumbs = [[['link' => route('admin.items.index'), 'name' => __('item.Items
     <x-slot name="thead">
         <tr>
             <th scope="col">#</th>
+
+            <th scope="col">{{ __('item.Image') }}</th>
             <th scope="col">{{ __('item.category') }}</th>
             <th scope="col">{{ __('item.item_name_' . FL) }}</th>
             <th scope="col">{{ __('item.item_name_' . SL) }}</th>
@@ -32,6 +34,7 @@ $breadcrumbs = [[['link' => route('admin.items.index'), 'name' => __('item.Items
         @foreach ($items as $item)
         <tr>
           <td>{{ $item->id }}</td>
+          <td><img src="{{ URL::asset('public/storage/uploads/itemImages/' . $item->item_image) }}" alt="products" class="img-responsive"></td>
           <td>{{ $item->category->{'category_name_'.FL} }}</td>
           <td>{{ $item->{'item_name_'.FL} }}</td>
           <td>{{ $item->{'item_name_'.SL} }}</td>

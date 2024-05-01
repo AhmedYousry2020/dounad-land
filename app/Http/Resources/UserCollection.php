@@ -17,7 +17,7 @@ class UserCollection extends JsonResource
         $data = [
             'id' => $this->id ?? '',
             'name' => $this->name ?? '',
-            'email' => $this->email ?? '',
+            'phone' => $this->phone ?? '',
         ];
         if ($this->token) {
             $data['access_token'] = $this->token;
