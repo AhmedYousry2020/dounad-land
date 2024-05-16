@@ -22,13 +22,8 @@ class ItemController extends Controller
   public function allItems(Request $request)
   {
       try{
-        $params = $request->all();
-        if($params){
-            $items = $this->filters($params['categoryId'],$params['name']);
-        }else{
-          $items = $this->itemRepository->all();
-        }
-          $items = $this->itemRepository->all();
+          $params = $request->all();
+          $items = $this->itemRepository->all('id', [], $params);
           return api(true,200,__('api.success'))
           ->add('items',ItemCollection::collection($items))
           ->get();
@@ -50,15 +45,5 @@ class ItemController extends Controller
   }
   }
 
-  public function filters($categoryId, $name){
 
-    if($categoryId != ''){
-        $items = $this->itemRepository->whereHas('category',function($query) use($categoryId){
-                $query->where('category_id',$categoryId);
-        });
-    }
-
-
-    return $items;
-}
 }

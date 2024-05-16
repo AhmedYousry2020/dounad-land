@@ -19,7 +19,7 @@ class BoxItemController extends Controller
    * get all categories
    * @return JsonResponse
    */
-  public function allItems()
+  public function allBoxes()
   {
       try{
           $boxes = $this->boxRepository->all();

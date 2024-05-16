@@ -82,6 +82,9 @@ class CartController extends Controller
           'cart_id'=>$cart->id,
           'item_id'=>$item->id
         ]);
+
+
+
         $this->cartItemRepository->update([
           'quantity'=>$request->qty,
         ],

@@ -33,7 +33,7 @@ $breadcrumbs = [[['link' => route('admin.items.index'), 'name' => __('item.Items
 
         @foreach ($items as $item)
         <tr>
-          <td>{{ $item->id }}</td>
+          <td>{{ $item->name }}</td>
           <td><img src="{{ URL::asset('public/storage/uploads/itemImages/' . $item->item_image) }}" alt="products" class="img-responsive"></td>
           <td>{{ $item->category->{'category_name_'.FL} }}</td>
           <td>{{ $item->{'item_name_'.FL} }}</td>

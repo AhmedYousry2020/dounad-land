@@ -12,7 +12,7 @@ class Box extends Model
 
     public function items()
     {
-      return $this->belongsToMany(Item::class, 'box_items', 'box_id', 'item_id');
-      // return $this->belongsToMany(Item::class, 'box_items', 'box_id', 'item_id')->withPivot('min_num', 'max_num');
+      // return $this->belongsToMany(Item::class, 'box_items', 'box_id', 'item_id');
+       return $this->belongsToMany(Item::class, 'box_items', 'box_id', 'item_id')->withPivot('min_num', 'max_num');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BoxItemController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ItemController;
@@ -42,8 +43,16 @@ Route::controller(CategoryController::class)->group(function(){
 
 Route::controller(ItemController::class)->group(function(){
   Route::get('/all-items', 'allItems')->middleware('auth:sanctum');
+  Route::get('/show/{id}', 'show')->middleware('auth:sanctum');
+
 });
 
+
+Route::controller(BoxItemController::class)->group(function(){
+  Route::get('/all-boxes', 'allBoxes')->middleware('auth:sanctum');
+  Route::get('/show/{id}', 'show')->middleware('auth:sanctum');
+
+});
 Route::controller(CartController::class)->group(function(){
   Route::post('/add-item-to-cart', 'addItemToCart')->middleware('auth:sanctum');
   Route::post('/remove-item-from-cart', 'removeItemFromCart')->middleware('auth:sanctum');
