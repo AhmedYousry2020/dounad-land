@@ -15,8 +15,8 @@ class BoxCollection extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-          "box_name"=>$this->{'box_name_'. SL} ?? '',
-          "box_description"=>$this->{'description_'. SL} ?? '',
+          "box_name"=>$this->{'box_name_'. getLocale()} ?? '',
+          "box_description"=>$this->{'description_'. getLocale()} ?? '',
           "price"=>$this->price ?? '',
           "num of items"=>$this->num_of_items ?? '',
           "box_items"=> BoxItemCollection::collection($this->items) ?? ''

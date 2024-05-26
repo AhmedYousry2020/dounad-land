@@ -35,8 +35,7 @@ class ItemController extends Controller
   public function show($id)
   {
     try{
-
-      $item = $this->itemRepository->find('id', $id);
+      $item = $this->itemRepository->find($id);
       return api(true,200,__('api.success'))
       ->add('item', new ItemCollection($item))
       ->get();

@@ -8,16 +8,24 @@ use App\Http\Requests\UserForgetPasswordRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserResetPasswordRequest;
+use App\Http\Requests\VerifyOtpRequest;
 use App\Http\Resources\UserCollection;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Notifications\ResetPassword;
+use App\Services\OtpService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+    private $otpService;
+    public function __construct(OtpService $otpService){
+      $this->otpService = $otpService;
+
+    }
     /**
      * register user
      * @param UserRegisterRequest $request
@@ -31,6 +39,10 @@ class AuthController extends Controller
             $user = User::create($data);
             $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
             $user->token = $token;
+
+            //send otp
+            $this->otpService->sendOtp($request);
+
             return api(true, 200, __('api.success_login'))
                 ->add('user', new UserCollection($user))
                 ->get();
@@ -78,6 +90,30 @@ class AuthController extends Controller
             return api_exception($e);
         }
     }
+
+
+     /**
+     * verify otp
+     * @return JsonResponse
+     */
+    public function verifyOtp(VerifyOtpRequest $request)
+    {
+        try {
+            $data = $request->validated();
+            if($this->otpService->checkOtp($request))
+            {
+              return api(true, 200, __('OTP verified successfully'))->get();
+            }else
+            {
+              return api(false, 400, __('Invalid OTP'))->get();
+            }
+        } catch (\Exception $e) {
+            return api_exception($e);
+        }
+    }
+
+
+
 
     /**
      * forget password user

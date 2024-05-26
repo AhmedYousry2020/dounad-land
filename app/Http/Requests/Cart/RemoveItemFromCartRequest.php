@@ -21,9 +21,14 @@ class RemoveItemFromCartRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'item_id'=>'required|integer',
-
-        ];
+        $rules = ['type'=>'required'];
+        if($this->type == 'box')
+        {
+          array_merge($rules,['box_id'=>'required|integer']);
+        }else
+        {
+          array_merge($rules,['item_id'=>'required|integer']);
+        }
+        return $rules;
     }
 }

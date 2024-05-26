@@ -20,6 +20,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\CartInterface::class, \App\Repositories\CartRepository::class);
         $this->app->bind(\App\Interfaces\CartItemInterface::class, \App\Repositories\CartItemRepository::class);
         $this->app->bind(\App\Interfaces\BoxInterface::class, \App\Repositories\BoxRepository::class);
+        $this->app->bind(\App\Interfaces\OtpInterface::class, \App\Repositories\OtpRepository::class);
 
       }
 

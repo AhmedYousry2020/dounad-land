@@ -7,6 +7,7 @@ use App\Http\Requests\Cart\RemoveItemFromCartRequest;
 use App\Http\Requests\Cart\StoreCartRequest;
 use App\Http\Resources\CartCollection;
 use App\Http\Resources\CartItemCollection;
+use App\Interfaces\BoxInterface;
 use App\Interfaces\CartInterface;
 use App\Interfaces\CartItemInterface;
 use App\Interfaces\ItemInterface;
@@ -20,50 +21,81 @@ class CartController extends Controller
       $this->cartItemRepository = $cartItemRepository;
 
     }
-    public function addItemToCart(ItemInterface $itemRepository, StoreCartRequest $request)
+    public function addItemToCart(ItemInterface $itemRepository, BoxInterface $boxRepository, StoreCartRequest $request)
     {
-
       try{
-          $price = 0;
-          $item = $itemRepository->find($request->item_id);
 
-          $cart = $this->cartRepository->store([
+         $cart = $this->cartRepository->store([
             'user_id' => auth()->user()->id
           ]);
-          if($item->qty_available < $request->qty)
-          {
-            return api(true, 201, __('api.quantity is not available!'))->get();
-          }
-          // count total of price
-          $totalPrice = $item->price * $request->qty;
-          $this->cartItemRepository->store([
-            'item_id'=>$item->id,
-            'cart_id'=>$cart->id,
-            'price'=>$item->price,
-            'quantity'=>$request->qty,
 
-          ]);
+          $price = 0;
+          if($request->type == 'box')
+          {
+            $box = $boxRepository->find($request->box_id);
+            foreach($request->box_items_details as $boxItem)
+            {
+              $item = $itemRepository->find($boxItem['id']);
+              // count total of price
+              $totalPrice = $item->price * $boxItem['qty'];
+              $this->cartItemRepository->store([
+                'item_id'=>$item->id,
+                'box_id'=>$box->id,
+                'cart_id'=>$cart->id,
+                'price'=>$item->price,
+                'quantity'=>$boxItem['qty'],
+              ]);
+            }
+          }else
+          {
+            $item = $itemRepository->find($request->item_id);
+            if($item->qty_available < $request->qty)
+            {
+              return api(true, 201, __('api.quantity is not available!'))->get();
+            }
+            // count total of price
+            $totalPrice = $item->price * $request->qty;
+            $this->cartItemRepository->store([
+              'item_id'=>$item->id,
+              'cart_id'=>$cart->id,
+              'price'=>$item->price,
+              'quantity'=>$request->qty,
+            ]);
+          }
 
           return api(true, 200, __('api.Item added to cart successfully'))->get();
-
     }
     catch(\Exception $e) {
       return api_exception($e);
     }
-
-
     }
 
-    public function removeItemFromCart(ItemInterface $itemRepository, RemoveItemFromCartRequest $request)
+    public function removeItemFromCart(ItemInterface $itemRepository,BoxInterface $boxRepository, RemoveItemFromCartRequest $request)
     {
       try{
-        $item = $itemRepository->find($request->item_id);
-        $cart = $this->cartRepository->find('user_id', auth()->user()->id);
-        $cartItem = $this->cartItemRepository->findByMany([
-          'cart_id'=>$cart->id,
-          'item_id'=>$item->id
-        ]);
-        $this->cartItemRepository->destroy($cartItem->id);
+        $cart = $this->cartRepository->findBy('user_id', auth()->user()->id);
+
+        if($request->type == 'box')
+        {
+          $box = $boxRepository->find($request->box_id);
+          $cartItems = $this->cartItemRepository->getBy([
+            'cart_id'=>$cart->id,
+            'box_id'=>$box->id
+          ]);
+          foreach($cartItems as $cartItem)
+          {
+            $this->cartItemRepository->destroy($cartItem->id);
+          }
+        }else
+        {
+          $item = $itemRepository->find($request->item_id);
+          $cartItem = $this->cartItemRepository->findByMany([
+            'cart_id'=>$cart->id,
+            'item_id'=>$item->id
+          ]);
+          $this->cartItemRepository->destroy($cartItem->id);
+
+        }
         return api(true, 200, __('api.Item removed from cart successfully'))->get();
       }
       catch(\Exception $e) {
@@ -83,8 +115,6 @@ class CartController extends Controller
           'item_id'=>$item->id
         ]);
 
-
-
         $this->cartItemRepository->update([
           'quantity'=>$request->qty,
         ],
@@ -100,13 +130,13 @@ class CartController extends Controller
     public function count()
     {
       try{
-        $carts = auth()->user()->carts;
-        if(!$carts)
+        $cart = auth()->user()->cart;
+        if(!$cart)
         {
           return api(true, 201, __('api.cart is empty!'))->get();
         }
         return api(true, 200, __('api.success'))
-                ->add('cart-count',$carts->count())
+                ->add('cart-count',count($cart->cartItems))
                 ->get();
     }catch(\Exception $e){
        return api_exception($e);
@@ -115,13 +145,13 @@ class CartController extends Controller
     public function viewCart()
     {
       try{
-          $carts = auth()->user()->carts;
-          if(!$carts)
+          $cart = auth()->user()->cart;
+          if(!$cart)
           {
             return api(true, 201, __('api.cart is empty!'))->get();
           }
           return api(true, 200, __('api.success'))
-                  ->add('cartDetails',CartItemCollection::collection($carts))
+                  ->add('cartDetails',new CartItemCollection($cart))
                   ->get();
       }catch(\Exception $e){
          return api_exception($e);
@@ -132,7 +162,6 @@ class CartController extends Controller
     {
       $cart = $this->cartRepository->destroy($cartId);
       return api(true, 200, __('api.Cart destroyed successfully'))->get();
-
     }
 
 }

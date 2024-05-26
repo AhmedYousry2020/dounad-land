@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Utility;
+namespace App\Utility;
 
 class ApiResponseUtility
 {

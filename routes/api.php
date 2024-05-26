@@ -27,30 +27,31 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
   Route::post('/register', 'register');
   Route::post('/login', 'login');
-  Route::post('/forget_password', 'forgetPassword');
-  Route::post('/forget_confirm_code', 'forgetConfirmCode');
-  Route::post('/reset_password', 'resetPassword');
+  Route::post('/verify_otp', 'verifyOtp');
+  // Route::post('/forget_password', 'forgetPassword');
+  // Route::post('/forget_confirm_code', 'forgetConfirmCode');
+  // Route::post('/reset_password', 'resetPassword');
   Route::post('/logout', 'logout')->middleware('auth:sanctum');
   Route::get('/profile', 'profile')->middleware('auth:sanctum');
 });
 
 
-Route::controller(CategoryController::class)->group(function(){
+Route::middleware('app-language')->controller(CategoryController::class)->group(function(){
   Route::get('/all-categories', 'allCategories')->middleware('auth:sanctum');
 });
 
 
 
-Route::controller(ItemController::class)->group(function(){
+Route::middleware('app-language')->controller(ItemController::class)->group(function(){
   Route::get('/all-items', 'allItems')->middleware('auth:sanctum');
-  Route::get('/show/{id}', 'show')->middleware('auth:sanctum');
+  Route::get('/items/{id}/show', 'show')->middleware('auth:sanctum');
 
 });
 
 
-Route::controller(BoxItemController::class)->group(function(){
+Route::middleware('app-language')->controller(BoxItemController::class)->group(function(){
   Route::get('/all-boxes', 'allBoxes')->middleware('auth:sanctum');
-  Route::get('/show/{id}', 'show')->middleware('auth:sanctum');
+  Route::get('/boxes/{id}/show', 'show')->middleware('auth:sanctum');
 
 });
 Route::controller(CartController::class)->group(function(){
@@ -59,7 +60,7 @@ Route::controller(CartController::class)->group(function(){
   Route::post('/update-item-quantity-from-cart', '  updateItemQuantityFromCart')->middleware('auth:sanctum');
   Route::get('/cart-count', 'count')->middleware('auth:sanctum');
   Route::get('/view-cart', 'viewCart')->middleware('auth:sanctum');
-  Route::post('/destroy-cart', 'destroyCart')->middleware('auth:sanctum');
+  Route::get('/destroy-cart/{id}', 'destroy')->middleware('auth:sanctum');
 
 });
 

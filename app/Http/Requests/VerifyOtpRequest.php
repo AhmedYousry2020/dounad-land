@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Cart;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCartRequest extends FormRequest
+class VerifyOtpRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,16 +21,14 @@ class StoreCartRequest extends FormRequest
      */
     public function rules(): array
     {
-      $rules = [
-        'type'=>'required|string'
-      ];
-      if($this->type == 'box')
-      {
-        array_merge($rules,['box_id'=>'required|integer','box_items_details'=>'required']);
-      }else
-      {
-        array_merge($rules,['item_id'=>'required|integer','qty'=>'required|integer']);
-      }
-        return $rules;
+        return [
+          'phone' => [
+            'required',
+            'numeric',
+        ],
+        'otp' => [
+            'required',
+        ]
+        ];
     }
 }

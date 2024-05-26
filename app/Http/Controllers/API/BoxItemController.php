@@ -34,7 +34,7 @@ class BoxItemController extends Controller
   public function show($id)
   {
     try{
-      $item = $this->boxRepository->find('id', $id);
+      $item = $this->boxRepository->find($id);
       return api(true,200,__('api.success'))
       ->add('item', new BoxCollection($item))
       ->get();

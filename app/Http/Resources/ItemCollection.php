@@ -16,9 +16,9 @@ class ItemCollection extends JsonResource
     {
         return [
           'id'=>$this->id ?? '',
-          'item_name'=>$this->{'item_name_'. SL} ?? '',
+          'item_name'=>$this->{'item_name_'. getLocale()} ?? '',
           'item_slug'=>$this->{'item_slug'} ?? '',
-          'description'=>$this->{'description_'. SL} ?? '',
+          'description'=>$this->{'description_'. getLocale()} ?? '',
           'price'=>$this->price ?? '',
           'qty_available'=>$this->qty_available ?? '',
           'category'=>new CategoryCollection($this->category)

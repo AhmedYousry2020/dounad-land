@@ -16,7 +16,7 @@ class CategoryCollection extends JsonResource
     {
         return [
             'id'=>$this->id ?? '',
-            'category_name'=>$this->{'category_name_'. SL} ?? '',
+            'category_name'=>$this->{'category_name_'. getLocale()} ?? '',
         ];
     }
 }

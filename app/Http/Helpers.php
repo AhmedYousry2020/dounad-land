@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Http\Utility\ApiResponseUtility;
+use App\Utility\ApiResponseUtility;
 use Illuminate\Support\Str;
 
 
