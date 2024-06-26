@@ -23,8 +23,8 @@ class ItemController extends Controller
   {
       try{
           $params = $request->all();
-          $items = $this->itemRepository->all('id', [], $params);
-          return api(true,200,__('api.success'))
+          $items = $this->itemRepository->paginate('id', [], 25, $params);
+          return api(true, 200 ,__('api.success'))
           ->add('items',ItemCollection::collection($items))
           ->get();
       }catch(\Exception $e){

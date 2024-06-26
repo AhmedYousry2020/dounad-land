@@ -18,4 +18,11 @@ class Item extends Model
     {
       return $this->belongsToMany(Box::class);
     }
+
+    public function checkFavorite($id)
+    {
+        $favoritesList = Favorite::where('user_id',auth()->user()->id)->pluck('item_id')->toArray();
+        $item =  Item::find($id);
+        return !empty($favoritesList) ? in_array($item->id,$favoritesList) : 0;
+    }
 }

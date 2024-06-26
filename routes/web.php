@@ -14,15 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$controller_path = 'App\Http\Controllers';
+$controller_path = 'App\Http\Controllers\dashboard';
 
 // Main Page Route
-Route::get('/', $controller_path . '\dashboard\HomeController@index')->name('dashboard.home');
+Route::get('/dashboard', $controller_path . '\dashboard\HomeController@index')->name('dashboard.home');
 
-Route::name('admin.')->group(function () use ($controller_path) {
+Route::name('dashboard.')->prefix('/dashboard')->group(function () use ($controller_path) {
 
-  Route::resource('/categories',$controller_path . '\dashboard\CategoryController');
-  Route::resource('/items',$controller_path . '\dashboard\ItemController');
-  Route::resource('/users',$controller_path . '\dashboard\ItemController')->only('index');
+  Route::get('/login', $controller_path.'\AuthController@LoginForm')->name('loginForm');
+  Route::post('/login', $controller_path.'\AuthController@login');
+  Route::get('/logout', $controller_path.'\AuthController@logout');
+
+  Route::resource('/categories',$controller_path . '\CategoryController');
+  Route::resource('/items',$controller_path . '\ItemController');
+  Route::resource('/users',$controller_path . '\ItemController')->only('index');
 
 });

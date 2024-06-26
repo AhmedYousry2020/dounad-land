@@ -27,6 +27,18 @@ $pageConfigs = ['myLayout' => 'blank'];
 @section('page-script')
 <script src="{{asset('assets/js/pages-auth.js')}}"></script>
 @endsection
+<style>
+  .signinbtn{
+    background-color: #b97d24;
+    border-color: #b97d24;
+    color: #341b0b;
+  }
+  .signinbtn:hover{
+    background-color: #341b0b;
+    border-color: #b97d24;
+    color: #b97d24;
+  }
+</style>
 
 @section('content')
 <div class="authentication-wrapper authentication-cover authentication-bg">
@@ -34,10 +46,9 @@ $pageConfigs = ['myLayout' => 'blank'];
     <!-- /Left Text -->
     <div class="d-none d-lg-flex col-lg-7 p-0">
       <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
-        <img src="{{ asset('assets/img/illustrations/auth-login-illustration-'.$configData['style'].'.png') }}" alt="auth-login-cover" class="img-fluid my-5 auth-illustration" data-app-light-img="illustrations/auth-login-illustration-light.png" data-app-dark-img="illustrations/auth-login-illustration-dark.png">
+        <img src="{{ asset('assets/img/illustrations/logo.jfif') }}" alt="auth-login-cover" class="img-fluid my-5 auth-illustration" data-app-light-img="illustrations/logo.jfif" data-app-dark-img="illustrations/logo.jfif">
 
-        <img src="{{ asset('assets/img/illustrations/bg-shape-image-'.$configData['style'].'.png') }}" alt="auth-login-cover" class="platform-bg" data-app-light-img="illustrations/bg-shape-image-light.png" data-app-dark-img="illustrations/bg-shape-image-dark.png">
-      </div>
+    </div>
     </div>
     <!-- /Left Text -->
 
@@ -80,35 +91,12 @@ $pageConfigs = ['myLayout' => 'blank'];
               </label>
             </div>
           </div>
-          <button class="btn btn-primary d-grid w-100" type="submit">
+          <button class="btn btn-primary d-grid w-100 signinbtn" type="submit">
             Sign in
           </button>
         </form>
 
-        <p class="text-center">
-          <span>New on our platform?</span>
-          <a href="{{url('auth/register-cover')}}">
-            <span>Create an account</span>
-          </a>
-        </p>
 
-        <div class="divider my-4">
-          <div class="divider-text">or</div>
-        </div>
-
-        <div class="d-flex justify-content-center">
-          <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
-            <i class="tf-icons fa-brands fa-facebook-f fs-5"></i>
-          </a>
-
-          <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
-            <i class="tf-icons fa-brands fa-google fs-5"></i>
-          </a>
-
-          <a href="javascript:;" class="btn btn-icon btn-label-twitter">
-            <i class="tf-icons fa-brands fa-twitter fs-5"></i>
-          </a>
-        </div>
       </div>
     </div>
     <!-- /Login -->

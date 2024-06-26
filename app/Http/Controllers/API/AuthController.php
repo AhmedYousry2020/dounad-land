@@ -9,6 +9,7 @@ use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserResetPasswordRequest;
 use App\Http\Requests\VerifyOtpRequest;
+use App\Http\Resources\OrderCollection;
 use App\Http\Resources\UserCollection;
 use App\Models\PasswordReset;
 use App\Models\User;
@@ -195,6 +196,18 @@ class AuthController extends Controller
             $user = auth()->user();
             return api(true, 200, __('api.success'))
             ->add('user', new UserCollection($user))
+            ->get();
+        } catch (\Exception $e) {
+            return api_exception($e);
+        }
+    }
+    public function orders()
+    {
+        try {
+            $user = auth()->user();
+            $orders = $user->orders;
+            return api(true, 200, __('api.success'))
+            ->add('order', OrderCollection::collection($orders))
             ->get();
         } catch (\Exception $e) {
             return api_exception($e);

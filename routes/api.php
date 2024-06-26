@@ -4,7 +4,11 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BoxItemController;
 use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\FavoriteController;
 use App\Http\Controllers\API\ItemController;
+use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\WarehouseController;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +37,7 @@ Route::controller(AuthController::class)->group(function () {
   // Route::post('/reset_password', 'resetPassword');
   Route::post('/logout', 'logout')->middleware('auth:sanctum');
   Route::get('/profile', 'profile')->middleware('auth:sanctum');
+  Route::get('/my-orders', 'orders')->middleware('auth:sanctum');
 });
 
 
@@ -57,11 +62,24 @@ Route::middleware('app-language')->controller(BoxItemController::class)->group(f
 Route::controller(CartController::class)->group(function(){
   Route::post('/add-item-to-cart', 'addItemToCart')->middleware('auth:sanctum');
   Route::post('/remove-item-from-cart', 'removeItemFromCart')->middleware('auth:sanctum');
-  Route::post('/update-item-quantity-from-cart', '  updateItemQuantityFromCart')->middleware('auth:sanctum');
+  Route::post('/update-item-quantity-from-cart', 'updateItemQuantityFromCart')->middleware('auth:sanctum');
   Route::get('/cart-count', 'count')->middleware('auth:sanctum');
   Route::get('/view-cart', 'viewCart')->middleware('auth:sanctum');
   Route::get('/destroy-cart/{id}', 'destroy')->middleware('auth:sanctum');
 
 });
 
+Route::middleware('app-language')->controller(FavoriteController::class)->group(function(){
+  Route::post('/add-to-favorite/{id}','addToFavorite')->middleware('auth:sanctum');
+  Route::get('/all-favoritelist','allFavotriteList')->middleware('auth:sanctum');
+});
 
+
+Route::middleware('app-language')->controller(WarehouseController::class)->group(function(){
+  Route::get('/all-warehouses', 'allWarehouses')->middleware('auth:sanctum');
+});
+
+
+Route::middleware('app-language')->controller(OrderController::class)->group(function(){
+  Route::post('/store-order','store')->middleware('auth:sanctum');
+});

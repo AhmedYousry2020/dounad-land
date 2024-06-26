@@ -109,12 +109,11 @@ class CartController extends Controller
     {
       try{
         $item = $itemRepository->find($request->item_id);
-        $cart = $this->cartRepository->find('user_id', auth()->user()->id);
+        $cart = $this->cartRepository->findBy('user_id', auth()->user()->id);
         $cartItem = $this->cartItemRepository->findByMany([
           'cart_id'=>$cart->id,
           'item_id'=>$item->id
         ]);
-
         $this->cartItemRepository->update([
           'quantity'=>$request->qty,
         ],
