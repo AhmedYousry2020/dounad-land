@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class UserForgetPasswordRequest extends FormRequest
 {
     /**
@@ -24,10 +25,19 @@ class UserForgetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => [
-                'required',
-                'email'
-            ],
+          'phone' => [
+            'required',
+            'numeric',
+            'min:10',
+
+        ],
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors(),
+        ], 422));
     }
 }

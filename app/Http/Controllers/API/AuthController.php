@@ -124,18 +124,20 @@ class AuthController extends Controller
     public function forgetPassword(UserForgetPasswordRequest $request)
     {
         try{
-        $user = User::where('email', $request['email'])->first();
+        $user = User::where('phone', $request['phone'])->first();
         if (!$user) return api(false, 404, __('api.404'))->get();
         $resetPasswordToken = str_pad(random_int(1, 9999), 4, '0', STR_PAD_LEFT);
 
-        $passwordReset = PasswordReset::where('email', $request['email'])->first();
+        $passwordReset = PasswordReset::where('phone', $request['phone'])->first();
             PasswordReset::create([
-                'email' => $user->email,
-                'token'=>$resetPasswordToken
+                'phone' => $user->phone,
+                'token'=>$resetPasswordToken,
             ]);
-        $user->notify(new ResetPassword("reset password code  ".$resetPasswordToken));
+        // $user->notify(new ResetPassword("reset password code  ".$resetPasswordToken));
 
-        return api(true, 200, __('api.success'))->get();
+        return api(true, 200, __('api.success'))
+               ->add('token', $resetPasswordToken)
+              ->get();
         } catch (\Exception $e) {
             return api_exception($e);
         }
@@ -169,7 +171,7 @@ class AuthController extends Controller
      */
     public function resetPassword(UserResetPasswordRequest $request) {
         try {
-            $user = User::where('email', $request['email'])->first();
+            $user = User::where('phone', $request['phone'])->first();
 
             // $resetPasswordToken = PasswordReset::where('email',$request['email'])->first();
             // if(!$resetPasswordToken && $resetPasswordToken->token != $request['token'])
