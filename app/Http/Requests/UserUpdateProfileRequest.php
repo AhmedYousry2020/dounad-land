@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-class UserResetPasswordRequest extends FormRequest
+use Illuminate\Validation\Rule;
+
+
+class UserUpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,21 +29,19 @@ class UserResetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-          'phone' => [
+          'name'=>[
             'required',
-            'numeric',
-            'min:10',
-
+            'string',
         ],
-        'password' => [
+           'email'=>[
                 'required',
-                'confirmed',
-        ],
-        'token'=>[
-              'required',
-              'numeric',
-        ]
+                'email',
+                Rule::unique(User::class)->ignore($this->user()->id)
 
+              ],
+            'device_token' => [
+              'required',
+          ]
         ];
     }
     protected function failedValidation(Validator $validator)
@@ -48,5 +50,4 @@ class UserResetPasswordRequest extends FormRequest
             'errors' => $validator->errors(),
         ], 422));
     }
-
 }

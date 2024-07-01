@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Interfaces\OtpInterface;
 use App\Models\User;
+use App\Notifications\VerifyAccount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -23,27 +24,32 @@ class OtpService {
 
       if(!$otp)
       {
+
         return false;
       }
-      if(Carbon::now()->lt($otp->expired_at))
+      if(Carbon::now()->gt($otp->expired_at))
       {
+
         return false;
       }
 
       return true;
   }
 
-  function sendOtp(Request $request)
+  function sendOtp($request, $user)
   {
-        // $otp = rand(50, 99) . rand(50, 99) . rand(50, 99);
-        //for testing
-        $otp = 111111;
+        $otp = rand(50, 99) . rand(50, 99) . rand(50, 99);
+
         $verificationOtp = $this->otpRepository->store([
           'otp'=>$otp,
-          'phone_number'=>$request->phone,
-          'expired_at'=> Carbon::now()->addMinutes(2)
+          'phone_number'=>$request['phone'],
+          'email'=>$request['email'],
+          'expired_at'=> Carbon::now()->addMinutes(65)
         ]);
         // SEND SMS
+        // SEND OTP TO EMAIL
+        $user->notify(new VerifyAccount("verification code  ".$otp));
+
         return true;
 
   }

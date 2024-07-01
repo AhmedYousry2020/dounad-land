@@ -19,7 +19,8 @@ class BoxCollection extends JsonResource
           "box_description"=>$this->{'description_'. getLocale()} ?? '',
           "price"=>$this->price ?? '',
           "num of items"=>$this->num_of_items ?? '',
-          "box_items"=> BoxItemCollection::collection($this->items) ?? ''
+          "box_items"=> BoxItemCollection::collection($this->items) ?? '',
+          'type'=>'box'
         ];
     }
 }

@@ -32,11 +32,13 @@ Route::controller(AuthController::class)->group(function () {
   Route::post('/register', 'register');
   Route::post('/login', 'login');
   Route::post('/verify_otp', 'verifyOtp');
+  Route::get('/send-otp-again','sendOtpAgain')->middleware('auth:sanctum');
   Route::post('/forget_password', 'forgetPassword');
   Route::post('/forget_confirm_code', 'forgetConfirmCode');
   Route::post('/reset_password', 'resetPassword');
   Route::post('/logout', 'logout')->middleware('auth:sanctum');
   Route::get('/profile', 'profile')->middleware('auth:sanctum');
+  Route::post('/update-profile', 'updateProfile')->middleware('auth:sanctum');
   Route::get('/my-orders', 'orders')->middleware('auth:sanctum');
 });
 

@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class VerificationOtp extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','phone_number','otp','expired_at'];
+    protected $fillable = ['user_id','phone_number','email','otp','expired_at'];
 
 }

@@ -24,6 +24,7 @@ class ItemCollection extends JsonResource
           'qty_available'=>$this->qty_available ?? '',
           'category'=>new CategoryCollection($this->category),
           'flag'=> $this->checkFavorite($this->id),
+          'type'=>'single-item'
         ];
     }
 }

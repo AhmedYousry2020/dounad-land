@@ -36,9 +36,18 @@ class UserRegisterRequest extends FormRequest
                 'min:10',
                 'unique:users',
             ],
-            'password' => [
+            'email'=>[
                 'required',
-                'confirmed',
+                'email',
+                'unique:users',
+            ],
+            'password' =>
+            [
+              'required',
+              'confirmed'
+            ],
+            'device_token' => [
+                'required',
             ]
         ];
     }
