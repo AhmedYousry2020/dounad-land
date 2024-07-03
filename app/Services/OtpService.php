@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\Interfaces\OtpInterface;
 use App\Models\User;
-use App\Notifications\VerifyAccount;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifiyEmail;
+
 
 class OtpService {
 
@@ -48,7 +50,9 @@ class OtpService {
         ]);
         // SEND SMS
         // SEND OTP TO EMAIL
-        $user->notify(new VerifyAccount("verification code  ".$otp));
+        Mail::to($user->email)->send(new VerifiyEmail($otp));
+
+        // $user->notify(new VerifyAccount("verification code  ".$otp));
 
         return true;
 
