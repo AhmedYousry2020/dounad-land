@@ -16,13 +16,13 @@
       "name": "Categories",
       "icon": "menu-icon tf-icons ti ti-layout-sidebar",
       "slug": "categories",
-      "url": "/categories"
+      "url": "/dashboard/categories"
     },
     {
       "name": "Items",
       "icon": "menu-icon tf-icons ti ti-layout-sidebar",
       "slug": "items",
-      "url": "/items"
+      "url": "/dashboard/items"
     }
   ]
 }

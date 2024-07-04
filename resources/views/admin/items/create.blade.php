@@ -14,7 +14,7 @@ $breadcrumbs = [[['link' => 'javascript:void(0)', 'name' => __('item.Categories'
 
 <x-forms.formCard class="col-12" title="{{ __('Category.Add new item') }}">
 
-    {!! Form::open(['route' => 'admin.items.store','method'=>'POST' , 'onsubmit' => 'showLoader()', 'enctype' =>'multipart/form-data']) !!}
+    {!! Form::open(['route' => 'dashboard.items.store','method'=>'POST' , 'onsubmit' => 'showLoader()', 'enctype' =>'multipart/form-data']) !!}
 
     <x-ui.divider>{{ __('item.Item information') }}</x-ui-divider>
 
@@ -49,8 +49,8 @@ $breadcrumbs = [[['link' => 'javascript:void(0)', 'name' => __('item.Categories'
 
 
         <div class="col-12 text-center mt-4">
-            <x-inputs.btn.submit>{{__('category.Add category')}}</x-inputs.btn.submit>
-            <x-inputs.a.link route="admin.categories.index">{{__('general.back')}}</x-inputs.a.link>
+            <x-inputs.btn.submit>{{__('category.Add Item')}}</x-inputs.btn.submit>
+            <x-inputs.a.link route="dashboard.items.index">{{__('general.back')}}</x-inputs.a.link>
         </div>
 
         {!! Form::close() !!}

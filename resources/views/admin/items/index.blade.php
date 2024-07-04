@@ -1,7 +1,7 @@
 @extends('layouts.layoutMaster')
 
 @php
-$breadcrumbs = [[['link' => route('admin.items.index'), 'name' => __('item.Items')]],['title' => __('Item.Manage Item')]];
+$breadcrumbs = [[['link' => route('dashboard.items.index'), 'name' => __('item.Items')]],['title' => __('Item.Manage Item')]];
 @endphp
 @section('title', __('item.Manage Items'))
 @section('content')
@@ -12,7 +12,7 @@ $breadcrumbs = [[['link' => route('admin.items.index'), 'name' => __('item.Items
     <x-slot name="cardbody">{!! sprintf(' %s<span class="text-danger">(%s) </span> - %s', __('category.This page allow you to manage system items') ,count($items) , __('item.Maing Item')) !!}</span></x-slot>
 
     <x-slot name="button">
-        <a class="btn btn-primary mb-1" href="{{ route('admin.items.create') }}">
+        <a class="btn btn-primary mb-1" href="{{ route('dashboard.items.create') }}">
             <em data-feather='plus-circle'></em> {{ __('item.Add new item') }}</a>
     </x-slot>
 
@@ -40,11 +40,11 @@ $breadcrumbs = [[['link' => route('admin.items.index'), 'name' => __('item.Items
           <td>{{ $item->{'item_name_'.SL} }}</td>
           <td>{!! isActive((bool) $item->is_active) !!}</td>
           <td>
-            <x-inputs.btn.view :route="route('admin.items.show',$item->id)" />
+            <x-inputs.btn.view :route="route('dashboard.items.show',$item->id)" />
 
-            <x-inputs.btn.edit :route="route('admin.items.edit',$item->id)" />
+            <x-inputs.btn.edit :route="route('dashboard.items.edit',$item->id)" />
 
-            <x-inputs.btn.delete :route="route('admin.items.destroy',$item->id)" />
+            <x-inputs.btn.delete :route="route('dashboard.items.destroy',$item->id)" />
           </td>
         </tr>
         @endforeach

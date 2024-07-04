@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 $controller_path = 'App\Http\Controllers\dashboard';
 
 // Main Page Route
-Route::get('/dashboard', $controller_path . '\dashboard\HomeController@index')->name('dashboard.home');
+Route::get('/dashboard', $controller_path . '\HomeController@index')->name('dashboard.home');
 
 Route::name('dashboard.')->prefix('/dashboard')->group(function () use ($controller_path) {
 
