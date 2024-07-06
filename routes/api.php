@@ -32,7 +32,7 @@ Route::controller(AuthController::class)->group(function () {
   Route::post('/register', 'register');
   Route::post('/login', 'login');
   Route::post('/verify_otp', 'verifyOtp');
-  Route::get('/send-otp-again','sendOtpAgain')->middleware('auth:sanctum');
+  Route::post('/send-otp-again','sendOtpAgain');
   Route::post('/forget_password', 'forgetPassword');
   Route::post('/forget_confirm_code', 'forgetConfirmCode');
   Route::post('/reset_password', 'resetPassword');

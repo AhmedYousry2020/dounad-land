@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SendOtpRequest;
 use App\Http\Requests\UserConfirmTokenRequest;
 use App\Http\Requests\UserForgetPasswordRequest;
 use App\Http\Requests\UserLoginRequest;
@@ -123,13 +124,14 @@ class AuthController extends Controller
         }
     }
 
-    public function sendOtpAgain()
+    public function sendOtpAgain(SendOtpRequest $request)
     {
         try {
-            $user = auth()->user();
-            $request = ['email'=>$user->email,'phone'=> $user->phone];
+            $data = $request->validated();
+            $user = User::where('phone',$data['phone'])->first();
             //send otp
-            $otp = $this->otpService->sendOtp($request, $user);
+            $data['email'] = $user->email;
+            $otp = $this->otpService->sendOtp($data, $user);
             return api(true, 200, __('OTP Send successfully'))->get();
 
         } catch (\Exception $e) {
